@@ -30,43 +30,34 @@ body {
   font-size: 22px;
   opacity: 0;
   animation: fadeIn 3s forwards;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-.subtitle:nth-child(1) { animation-delay: 1s; }
-.subtitle:nth-child(2) { animation-delay: 4s; }
-.subtitle:nth-child(3) { animation-delay: 7s; }
-.subtitle:nth-child(4) { animation-delay: 10s; }
-.subtitle:nth-child(5) { animation-delay: 13s; }
+.subtitle:nth-child(1){animation-delay:1s}
+.subtitle:nth-child(2){animation-delay:4s}
+.subtitle:nth-child(3){animation-delay:7s}
+.subtitle:nth-child(4){animation-delay:10s}
 
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
+@keyframes fadeIn { to { opacity: 1; } }
 
 button {
   margin-top: 30px;
-  padding: 14px 34px;
+  padding: 16px 36px;
   font-size: 18px;
   border: none;
   border-radius: 30px;
   background: crimson;
   color: white;
   cursor: pointer;
-  box-shadow: 0 0 20px rgba(255,0,0,0.7);
-  display: none;
+  box-shadow: 0 0 25px rgba(255,0,0,0.7);
 }
+
+#holdBtn { display: none; }
 
 #kiss {
   font-size: 60px;
-  margin-top: 20px;
   display: none;
   animation: pop 1s infinite alternate;
-}
-
-#finalText {
-  margin-top: 20px;
-  font-size: 20px;
-  display: none;
 }
 
 @keyframes pop {
@@ -74,7 +65,17 @@ button {
   to { transform: scale(1.2); }
 }
 
-/* Rain Effect */
+#climax, #nextBtn, #nextScene {
+  display: none;
+  margin-top: 20px;
+}
+
+#nextScene {
+  font-size: 20px;
+  animation: fadeIn 3s forwards;
+}
+
+/* Rain */
 .rain {
   position: absolute;
   width: 2px;
@@ -82,10 +83,20 @@ button {
   background: rgba(255,255,255,0.2);
   animation: fall linear infinite;
 }
-
 @keyframes fall {
   from { top: -120px; }
   to { top: 100vh; }
+}
+
+/* Flowers */
+.flower {
+  position: absolute;
+  font-size: 24px;
+  animation: flowerFall linear infinite;
+}
+@keyframes flowerFall {
+  from { top: -50px; opacity: 1; }
+  to { top: 100vh; opacity: 0; }
 }
 </style>
 </head>
@@ -93,16 +104,31 @@ button {
 <body>
 
 <div class="center">
-  <div class="subtitle">🌧️ వాన పడుతోంది… మ్యూజిక్ మెల్లగా ప్లే అవుతోంది…</div>
-  <div class="subtitle">నువ్వు నా వైపు చూస్తున్నావు… నేనూ నిన్నే చూస్తున్నాను…</div>
-  <div class="subtitle">ఈ ప్రపంచంలో చాలా మంది ఉంటారు…</div>
+  <div class="subtitle">🌧️ వాన పడుతోంది… మెల్లగా మ్యూజిక్ మొదలైంది…</div>
+  <div class="subtitle">నువ్వు నా వైపు చూస్తున్నావు…</div>
+  <div class="subtitle">ఈ ప్రపంచంలో చాలామంది ఉన్నారు…</div>
   <div class="subtitle">కానీ నా ప్రపంచం మాత్రం నువ్వే ❤️</div>
-  <div class="subtitle">ఈ క్షణం… ఎప్పటికీ గుర్తుండిపోవాలి…</div>
 
-  <button id="btn" onclick="showKiss()">ఇంకా దగ్గరకి రా 💋</button>
+  <button id="holdBtn">5 సెకన్లు హోల్డ్ చేయి 💋</button>
+
   <div id="kiss">💋</div>
-  <div id="finalText">ఇది కేవలం ఒక ముద్దు కాదు…  
-  నా జీవితంపై ఇచ్చిన వాగ్దానం 😌❤️</div>
+
+  <div id="climax">
+    ఇది కేవలం ఒక ముద్దు కాదు…<br>
+    నా జీవితమంతా నిన్నే ప్రేమిస్తాను అనే వాగ్దానం ❤️<br><br>
+    🎞️ <i>— THE END కాదు… THE BEGINNING —</i>
+  </div>
+
+  <button id="nextBtn" onclick="showNextScene()">Next Scene ▶️</button>
+
+  <div id="nextScene">
+    🌙 ఈ సీన్ ఎవరికీ కనిపించదు…<br><br>
+    నువ్వు నవ్వితే నాకు ప్రపంచమే దొరికినట్టుంటుంది…<br>
+    నువ్వు బాధపడితే నా గుండె బరువెక్కిపోతుంది…<br><br>
+    నువ్వు నా అలవాటు కాదు…<br>
+    నా అవసరం ❤️<br><br>
+    <b>NIKKI Will you stay with me… forever?</b> 💍
+  </div>
 </div>
 
 <audio autoplay loop>
@@ -111,22 +137,62 @@ button {
 
 <script>
 setTimeout(() => {
-  document.getElementById("btn").style.display = "inline-block";
-}, 16000);
+  document.getElementById("holdBtn").style.display = "inline-block";
+}, 14000);
 
-function showKiss() {
-  document.getElementById("kiss").style.display = "block";
-  document.getElementById("finalText").style.display = "block";
-  navigator.vibrate && navigator.vibrate(200);
+let hold = 0, timer;
+const btn = document.getElementById("holdBtn");
+
+btn.addEventListener("mousedown", start);
+btn.addEventListener("touchstart", start);
+btn.addEventListener("mouseup", reset);
+btn.addEventListener("touchend", reset);
+
+function start() {
+  timer = setInterval(() => {
+    hold++;
+    if (hold >= 5) unlock();
+  }, 1000);
 }
 
-/* Rain Generator */
-for (let i = 0; i < 70; i++) {
-  let drop = document.createElement("div");
-  drop.className = "rain";
-  drop.style.left = Math.random() * 100 + "vw";
-  drop.style.animationDuration = (Math.random() * 1 + 0.6) + "s";
-  document.body.appendChild(drop);
+function reset() {
+  clearInterval(timer);
+  hold = 0;
+}
+
+function unlock() {
+  clearInterval(timer);
+  btn.style.display = "none";
+  document.getElementById("kiss").style.display = "block";
+  document.getElementById("climax").style.display = "block";
+  document.getElementById("nextBtn").style.display = "inline-block";
+  navigator.vibrate && navigator.vibrate([200,100,200]);
+  flowers();
+}
+
+function showNextScene() {
+  document.getElementById("nextScene").style.display = "block";
+}
+
+// Rain
+for (let i = 0; i < 60; i++) {
+  let r = document.createElement("div");
+  r.className = "rain";
+  r.style.left = Math.random() * 100 + "vw";
+  r.style.animationDuration = (Math.random() * 1 + 0.6) + "s";
+  document.body.appendChild(r);
+}
+
+// Flowers
+function flowers() {
+  for (let i = 0; i < 25; i++) {
+    let f = document.createElement("div");
+    f.className = "flower";
+    f.innerText = "🌸";
+    f.style.left = Math.random() * 100 + "vw";
+    f.style.animationDuration = (Math.random() * 2 + 3) + "s";
+    document.body.appendChild(f);
+  }
 }
 </script>
 
