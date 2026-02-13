@@ -8,57 +8,124 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Telugu&display=swap" rel="stylesheet">
 
 <style>
-body{
-  margin:0;height:100vh;overflow:hidden;
-  background:linear-gradient(to bottom,#0f2027,#203a43,#2c5364);
-  font-family:'Noto Serif Telugu',serif;
-  color:white;text-align:center;
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  overflow: hidden;
+  font-family: 'Noto Serif Telugu', serif;
+  color: white;
+  text-align: center;
 }
-.center{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:90%;
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
 }
-.subtitle{font-size:22px;opacity:0;animation:fade 3s forwards;margin-bottom:12px}
+
+.subtitle {
+  font-size: 22px;
+  opacity: 0;
+  animation: fadeIn 3s forwards;
+  margin-bottom: 12px;
+}
+
 .subtitle:nth-child(1){animation-delay:1s}
 .subtitle:nth-child(2){animation-delay:4s}
 .subtitle:nth-child(3){animation-delay:7s}
 .subtitle:nth-child(4){animation-delay:10s}
-@keyframes fade{to{opacity:1}}
 
-#holdBtn{
-  margin-top:30px;width:140px;height:140px;
-  border-radius:50%;border:none;
-  background:crimson;color:white;
-  box-shadow:0 0 30px rgba(255,0,0,.8);
-  display:none;font-size:16px;
-  user-select:none;-webkit-user-select:none;
-  -webkit-touch-callout:none;touch-action:none;
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* HOLD BUTTON */
+#holdBtn {
+  margin-top: 30px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: none;
+  background: crimson;
+  color: white;
+  font-size: 16px;
+  box-shadow: 0 0 30px rgba(255,0,0,0.8);
+  display: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: none;
 }
-.heartbeat{animation:beat .8s infinite}
-@keyframes beat{50%{transform:scale(1.15)}}
 
-svg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none}
-circle{fill:none;stroke:white;stroke-width:6;stroke-dasharray:440;stroke-dashoffset:440}
+/* HEARTBEAT */
+.heartbeat {
+  animation: beat 0.8s infinite;
+}
+@keyframes beat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
 
-#kiss{font-size:60px;display:none;animation:pop 1s infinite alternate}
-@keyframes pop{to{transform:scale(1.2)}}
+/* PROGRESS RING */
+svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
 
-#climax,#nextBtn,#yesScene,#hugScene{display:none;margin-top:20px;font-size:20px}
+circle {
+  fill: none;
+  stroke: rgba(255,255,255,0.8);
+  stroke-width: 6;
+  stroke-dasharray: 440;
+  stroke-dashoffset: 440;
+  transition: stroke-dashoffset 0.2s linear;
+}
 
-/* rain */
-.rain{position:absolute;width:2px;height:120px;background:rgba(255,255,255,.2);animation:fall linear infinite}
-@keyframes fall{to{top:100vh}}
+#kiss {
+  font-size: 60px;
+  display: none;
+  animation: pop 1s infinite alternate;
+}
 
-/* flowers */
-.flower{position:absolute;font-size:24px;animation:flower 4s linear infinite}
-@keyframes flower{to{top:100vh;opacity:0}}
+@keyframes pop {
+  from { transform: scale(1); }
+  to { transform: scale(1.2); }
+}
 
-/* fireworks */
-.fire{position:absolute;font-size:28px;animation:boom 1.5s linear infinite}
-@keyframes boom{
-  0%{transform:scale(.5);opacity:1}
-  100%{transform:scale(2);opacity:0}
+#climax, #nextBtn, #nextScene {
+  display: none;
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+/* RAIN */
+.rain {
+  position: absolute;
+  width: 2px;
+  height: 120px;
+  background: rgba(255,255,255,0.2);
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  from { top: -120px; }
+  to { top: 100vh; }
+}
+
+/* FLOWERS */
+.flower {
+  position: absolute;
+  font-size: 24px;
+  animation: flowerFall linear infinite;
+}
+@keyframes flowerFall {
+  from { top: -50px; opacity: 1; }
+  to { top: 100vh; opacity: 0; }
 }
 </style>
 </head>
@@ -73,8 +140,9 @@ circle{fill:none;stroke:white;stroke-width:6;stroke-dasharray:440;stroke-dashoff
 
   <div style="position:relative;display:inline-block">
     <button id="holdBtn">5 సెకన్లు<br>హోల్డ్ చేయి 💋</button>
+
     <svg width="160" height="160">
-      <circle id="ring" cx="80" cy="80" r="70"/>
+      <circle id="progressRing" cx="80" cy="80" r="70"/>
     </svg>
   </div>
 
@@ -82,23 +150,16 @@ circle{fill:none;stroke:white;stroke-width:6;stroke-dasharray:440;stroke-dashoff
 
   <div id="climax">
     ఇది కేవలం ఒక ముద్దు కాదు…<br>
-    నా జీవితమంతా నిన్నే ప్రేమిస్తాను అనే వాగ్దానం ❤️
+    నా జీవితమంతా నిన్నే ప్రేమిస్తాను అనే వాగ్దానం ❤️<br><br>
+    🎞️ <i>— THE END కాదు… THE BEGINNING —</i>
   </div>
 
-  <button id="nextBtn" onclick="showYes()">Next Scene ▶️</button>
+  <button id="nextBtn" onclick="showNextScene()">Next Scene ▶️</button>
 
-  <!-- 1️⃣ SHE SAID YES -->
-  <div id="yesScene">
-    💍 <b>She said YES!</b> 😍<br><br>
-    ఈ ప్రేమకి ఈరోజు కొత్త అర్థం వచ్చింది ❤️<br>
-    <button onclick="showHug()">Hug Day 🤗</button>
-  </div>
-
-  <!-- 3️⃣ HUG DAY -->
-  <div id="hugScene">
-    🤗 ఈ హగ్ మాటలకన్నా బలమైనది…<br>
-    దూరమైనా దగ్గరగా ఉన్న ఫీలింగ్ ❤️<br><br>
-    <i>Forever starts here…</i>
+  <div id="nextScene">
+    🌙 ఈ సీన్ ఎవరికీ కనిపించదు…<br><br>
+    నువ్వు నా అవసరం ❤️<br><br>
+    <b>Will you stay with me forever?</b> 💍
   </div>
 </div>
 
@@ -107,52 +168,77 @@ circle{fill:none;stroke:white;stroke-width:6;stroke-dasharray:440;stroke-dashoff
 </audio>
 
 <script>
-setTimeout(()=>holdBtn.style.display="inline-block",14000);
+/* SHOW HOLD BUTTON */
+setTimeout(() => {
+  document.getElementById("holdBtn").style.display = "inline-block";
+}, 14000);
 
-let t=0,i;const ring=document.getElementById("ring"),audio=document.getElementById("bgm");
+/* HOLD LOGIC */
+let holdTime = 0;
+let interval = null;
+const btn = document.getElementById("holdBtn");
+const ring = document.getElementById("progressRing");
+const audio = document.getElementById("bgm");
 
-holdBtn.addEventListener("pointerdown",e=>{
-  e.preventDefault();holdBtn.classList.add("heartbeat");audio.volume=.2;
-  i=setInterval(()=>{
-    t++;ring.style.strokeDashoffset=440-(t/5)*440;
-    audio.volume=Math.min(1,audio.volume+.15);
-    if(t>=5)unlock();
-  },1000);
+btn.addEventListener("pointerdown", e => {
+  e.preventDefault();
+  btn.classList.add("heartbeat");
+  audio.volume = 0.2;
+
+  interval = setInterval(() => {
+    holdTime++;
+    ring.style.strokeDashoffset = 440 - (holdTime / 5) * 440;
+    audio.volume = Math.min(1, audio.volume + 0.15);
+
+    if (holdTime >= 5) unlock();
+  }, 1000);
 });
-["pointerup","pointerleave","pointercancel"].forEach(e=>holdBtn.addEventListener(e,reset));
 
-function reset(){clearInterval(i);t=0;ring.style.strokeDashoffset=440;holdBtn.classList.remove("heartbeat")}
+["pointerup","pointerleave","pointercancel"].forEach(ev =>
+  btn.addEventListener(ev, reset)
+);
 
-function unlock(){
-  clearInterval(i);holdBtn.style.display="none";document.querySelector("svg").style.display="none";
-  kiss.style.display="block";climax.style.display="block";nextBtn.style.display="inline-block";
-  navigator.vibrate&&navigator.vibrate([200,100,200]);flowers();
+function reset() {
+  clearInterval(interval);
+  holdTime = 0;
+  ring.style.strokeDashoffset = 440;
+  btn.classList.remove("heartbeat");
 }
 
-function showYes(){
-  yesScene.style.display="block";fireworks();
+function unlock() {
+  clearInterval(interval);
+  btn.style.display = "none";
+  document.querySelector("svg").style.display = "none";
+  document.getElementById("kiss").style.display = "block";
+  document.getElementById("climax").style.display = "block";
+  document.getElementById("nextBtn").style.display = "inline-block";
+  navigator.vibrate && navigator.vibrate([200,100,200]);
+  flowers();
 }
-function showHug(){hugScene.style.display="block"}
 
+/* NEXT SCENE */
+function showNextScene(){
+  document.getElementById("nextScene").style.display="block";
+}
+
+/* RAIN */
 for(let i=0;i<60;i++){
   let r=document.createElement("div");
-  r.className="rain";r.style.left=Math.random()*100+"vw";
-  r.style.animationDuration=(Math.random()+.6)+"s";document.body.appendChild(r);
+  r.className="rain";
+  r.style.left=Math.random()*100+"vw";
+  r.style.animationDuration=(Math.random()+0.6)+"s";
+  document.body.appendChild(r);
 }
+
+/* FLOWERS */
 function flowers(){
   for(let i=0;i<25;i++){
     let f=document.createElement("div");
-    f.className="flower";f.innerText="🌸";
-    f.style.left=Math.random()*100+"vw";document.body.appendChild(f);
-  }
-}
-function fireworks(){
-  for(let i=0;i<20;i++){
-    let f=document.createElement("div");
-    f.className="fire";f.innerText="✨";
-    f.style.left=Math.random()*100+"vw";f.style.top=Math.random()*100+"vh";
+    f.className="flower";
+    f.innerText="🌸";
+    f.style.left=Math.random()*100+"vw";
+    f.style.animationDuration=(Math.random()*2+3)+"s";
     document.body.appendChild(f);
-    setTimeout(()=>f.remove(),1500);
   }
 }
 </script>
