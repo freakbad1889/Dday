@@ -1,245 +1,166 @@
 <!DOCTYPE html>
-<html lang="te">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kiss Day 💋</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Telugu&display=swap" rel="stylesheet">
+<title>Always You ❤️</title>
 
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-  overflow: hidden;
-  font-family: 'Noto Serif Telugu', serif;
-  color: white;
-  text-align: center;
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(180deg,#0b1d26,#1b3a4b,#2c5364);
+  color:#f5f5f5;
+  font-family:'Georgia', serif;
+  overflow:hidden;
 }
 
-.center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
+.scene{
+  display:none;
+  height:100vh;
+  padding:30px;
+  text-align:center;
 }
 
-.subtitle {
-  font-size: 22px;
-  opacity: 0;
-  animation: fadeIn 3s forwards;
-  margin-bottom: 12px;
+.scene.active{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
-.subtitle:nth-child(1){animation-delay:1s}
-.subtitle:nth-child(2){animation-delay:4s}
-.subtitle:nth-child(3){animation-delay:7s}
-.subtitle:nth-child(4){animation-delay:10s}
-
-@keyframes fadeIn { to { opacity: 1; } }
-
-/* HOLD BUTTON */
-#holdBtn {
-  margin-top: 30px;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  border: none;
-  background: crimson;
-  color: white;
-  font-size: 16px;
-  box-shadow: 0 0 30px rgba(255,0,0,0.8);
-  display: none;
-
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-  touch-action: none;
+p{
+  font-size:20px;
+  line-height:1.8;
+  margin:8px 0;
 }
 
-/* HEARTBEAT */
-.heartbeat {
-  animation: beat 0.8s infinite;
-}
-@keyframes beat {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
+h1{
+  font-size:28px;
+  margin-bottom:20px;
 }
 
-/* PROGRESS RING */
-svg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
+button{
+  margin-top:35px;
+  padding:14px 34px;
+  border:none;
+  border-radius:30px;
+  font-size:18px;
+  background:#ffffff;
+  color:#1b3a4b;
+  cursor:pointer;
+  box-shadow:0 0 15px rgba(255,255,255,0.4);
 }
 
-circle {
-  fill: none;
-  stroke: rgba(255,255,255,0.8);
-  stroke-width: 6;
-  stroke-dasharray: 440;
-  stroke-dashoffset: 440;
-  transition: stroke-dashoffset 0.2s linear;
+.yes{
+  background:#ff5e8e;
+  color:white;
+  font-size:22px;
 }
 
-#kiss {
-  font-size: 60px;
-  display: none;
-  animation: pop 1s infinite alternate;
+.fade{
+  animation:fadeIn 2s ease;
 }
 
-@keyframes pop {
-  from { transform: scale(1); }
-  to { transform: scale(1.2); }
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
 }
 
-#climax, #nextBtn, #nextScene {
-  display: none;
-  margin-top: 20px;
-  font-size: 20px;
-}
-
-/* RAIN */
-.rain {
-  position: absolute;
-  width: 2px;
-  height: 120px;
-  background: rgba(255,255,255,0.2);
-  animation: fall linear infinite;
-}
-@keyframes fall {
-  from { top: -120px; }
-  to { top: 100vh; }
-}
-
-/* FLOWERS */
-.flower {
-  position: absolute;
-  font-size: 24px;
-  animation: flowerFall linear infinite;
-}
-@keyframes flowerFall {
-  from { top: -50px; opacity: 1; }
-  to { top: 100vh; opacity: 0; }
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
 }
 </style>
 </head>
 
 <body>
 
-<div class="center">
-  <div class="subtitle">🌧️ వాన పడుతోంది… మెల్లగా మ్యూజిక్ మొదలైంది…</div>
-  <div class="subtitle">నువ్వు నా వైపు చూస్తున్నావు…</div>
-  <div class="subtitle">ఈ ప్రపంచంలో చాలామంది ఉన్నారు…</div>
-  <div class="subtitle">కానీ నా ప్రపంచం మాత్రం నువ్వే ❤️</div>
-
-  <div style="position:relative;display:inline-block">
-    <button id="holdBtn">5 సెకన్లు<br>హోల్డ్ చేయి 💋</button>
-
-    <svg width="160" height="160">
-      <circle id="progressRing" cx="80" cy="80" r="70"/>
-    </svg>
-  </div>
-
-  <div id="kiss">💋</div>
-
-  <div id="climax">
-    ఇది కేవలం ఒక ముద్దు కాదు…<br>
-    నా జీవితమంతా నిన్నే ప్రేమిస్తాను అనే వాగ్దానం ❤️<br><br>
-    🎞️ <i>— THE END కాదు… THE BEGINNING —</i>
-  </div>
-
-  <button id="nextBtn" onclick="showNextScene()">Next Scene ▶️</button>
-
-  <div id="nextScene">
-    🌙 ఈ సీన్ ఎవరికీ కనిపించదు…<br><br>
-    నువ్వు నా అవసరం ❤️<br><br>
-    <b>Will you stay with me forever?</b> 💍
-  </div>
-</div>
-
-<audio id="bgm" autoplay loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
+<audio id="music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
+<!-- SCENE 1 -->
+<div class="scene active fade" id="scene1">
+  <p>🌧️ వాన పడుతుంటే…</p>
+  <p>నిశ్శబ్దంలో నా హృదయం నిన్ను గుర్తు చేసుకుంది…</p>
+
+  <p>ఈ ప్రపంచంలో చాలామంది ఉన్నారు…</p>
+  <p>కానీ నా ప్రపంచం మాత్రం నువ్వే ❤️</p>
+
+  <p>నువ్వు నవ్వితే చాలు…</p>
+  <p>నా రోజు సంపూర్ణం అవుతుంది ✨</p>
+
+  <p><b>ఇది ముగింపు కాదు…</b></p>
+  <p><b>ఇది మన కథ మొదలు 🌙</b></p>
+
+  <button onclick="goNext()">Next ▶️</button>
+</div>
+
+<!-- SCENE 2 -->
+<div class="scene fade" id="scene2">
+  <p>🌸 ఈ క్షణం కోసం…</p>
+  <p>చాలా రోజులుగా నా మనసు ఎదురుచూస్తోంది…</p>
+
+  <h1>Will you stay with me forever? 💍</h1>
+
+  <button class="yes" onclick="yesClicked()">YES ❤️</button>
+</div>
+
+<canvas id="fireworks"></canvas>
+
 <script>
-/* SHOW HOLD BUTTON */
-setTimeout(() => {
-  document.getElementById("holdBtn").style.display = "inline-block";
-}, 14000);
+const music = document.getElementById("music");
 
-/* HOLD LOGIC */
-let holdTime = 0;
-let interval = null;
-const btn = document.getElementById("holdBtn");
-const ring = document.getElementById("progressRing");
-const audio = document.getElementById("bgm");
-
-btn.addEventListener("pointerdown", e => {
-  e.preventDefault();
-  btn.classList.add("heartbeat");
-  audio.volume = 0.2;
-
-  interval = setInterval(() => {
-    holdTime++;
-    ring.style.strokeDashoffset = 440 - (holdTime / 5) * 440;
-    audio.volume = Math.min(1, audio.volume + 0.15);
-
-    if (holdTime >= 5) unlock();
-  }, 1000);
-});
-
-["pointerup","pointerleave","pointercancel"].forEach(ev =>
-  btn.addEventListener(ev, reset)
-);
-
-function reset() {
-  clearInterval(interval);
-  holdTime = 0;
-  ring.style.strokeDashoffset = 440;
-  btn.classList.remove("heartbeat");
+function goNext(){
+  music.play(); // mobile required
+  document.getElementById("scene1").classList.remove("active");
+  document.getElementById("scene2").classList.add("active");
 }
 
-function unlock() {
-  clearInterval(interval);
-  btn.style.display = "none";
-  document.querySelector("svg").style.display = "none";
-  document.getElementById("kiss").style.display = "block";
-  document.getElementById("climax").style.display = "block";
-  document.getElementById("nextBtn").style.display = "inline-block";
-  navigator.vibrate && navigator.vibrate([200,100,200]);
-  flowers();
-}
-
-/* NEXT SCENE */
-function showNextScene(){
-  document.getElementById("nextScene").style.display="block";
-}
-
-/* RAIN */
-for(let i=0;i<60;i++){
-  let r=document.createElement("div");
-  r.className="rain";
-  r.style.left=Math.random()*100+"vw";
-  r.style.animationDuration=(Math.random()+0.6)+"s";
-  document.body.appendChild(r);
-}
-
-/* FLOWERS */
-function flowers(){
-  for(let i=0;i<25;i++){
-    let f=document.createElement("div");
-    f.className="flower";
-    f.innerText="🌸";
-    f.style.left=Math.random()*100+"vw";
-    f.style.animationDuration=(Math.random()*2+3)+"s";
-    document.body.appendChild(f);
+function yesClicked(){
+  if(navigator.vibrate){
+    navigator.vibrate([200,100,200,100,400]);
   }
+  startFireworks();
+}
+
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let particles = [];
+
+function startFireworks(){
+  for(let i=0;i<180;i++){
+    particles.push({
+      x:canvas.width/2,
+      y:canvas.height/2,
+      vx:(Math.random()-0.5)*7,
+      vy:(Math.random()-0.5)*7,
+      life:120,
+      color:`hsl(${Math.random()*360},100%,70%)`
+    });
+  }
+  animate();
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach((p,i)=>{
+    p.x+=p.vx;
+    p.y+=p.vy;
+    p.life--;
+    ctx.fillStyle=p.color;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,2.5,0,Math.PI*2);
+    ctx.fill();
+    if(p.life<=0) particles.splice(i,1);
+  });
+  if(particles.length>0) requestAnimationFrame(animate);
 }
 </script>
 
