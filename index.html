@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Always You ❤️</title>
+<title>Kiss Day 💋</title>
 
 <style>
 body{
   margin:0;
   height:100vh;
-  background:linear-gradient(180deg,#0b1d26,#1b3a4b,#2c5364);
-  color:#f5f5f5;
+  background:linear-gradient(180deg,#0b1d26,#1b3a4b,#243949);
+  color:#fff;
   font-family:'Georgia', serif;
   overflow:hidden;
 }
@@ -31,31 +31,38 @@ body{
 
 p{
   font-size:20px;
-  line-height:1.8;
-  margin:8px 0;
+  line-height:1.9;
+  margin:10px 0;
 }
 
 h1{
-  font-size:28px;
-  margin-bottom:20px;
+  font-size:26px;
+  margin:25px 0;
 }
 
 button{
   margin-top:35px;
-  padding:14px 34px;
+  padding:14px 36px;
   border:none;
-  border-radius:30px;
+  border-radius:40px;
   font-size:18px;
   background:#ffffff;
-  color:#1b3a4b;
+  color:#243949;
   cursor:pointer;
-  box-shadow:0 0 15px rgba(255,255,255,0.4);
+  box-shadow:0 0 20px rgba(255,255,255,0.4);
 }
 
-.yes{
-  background:#ff5e8e;
+.kiss{
+  background:#ff4d6d;
   color:white;
   font-size:22px;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.08);}
+  100%{transform:scale(1);}
 }
 
 .fade{
@@ -79,34 +86,32 @@ canvas{
 <body>
 
 <audio id="music" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
 </audio>
 
 <!-- SCENE 1 -->
 <div class="scene active fade" id="scene1">
-  <p>🌧️ వాన పడుతుంటే…</p>
-  <p>నిశ్శబ్దంలో నా హృదయం నిన్ను గుర్తు చేసుకుంది…</p>
+  <p>🌙 ఈ రాత్రి… నిశ్శబ్దంగా ఉంది</p>
+  <p>కానీ నా మనసులో మాత్రం నువ్వే…</p>
 
-  <p>ఈ ప్రపంచంలో చాలామంది ఉన్నారు…</p>
-  <p>కానీ నా ప్రపంచం మాత్రం నువ్వే ❤️</p>
+  <p>నీ దగ్గర ఉన్నప్పుడు మాటలు అవసరం లేదు…</p>
+  <p>ఒక్క క్షణం… ఒక్క ముద్దు చాలూ 💋</p>
 
-  <p>నువ్వు నవ్వితే చాలు…</p>
-  <p>నా రోజు సంపూర్ణం అవుతుంది ✨</p>
+  <p>ఆ ముద్దులోనే…</p>
+  <p>నా ప్రేమ, నా భద్రత, నా ప్రపంచం ❤️</p>
 
-  <p><b>ఇది ముగింపు కాదు…</b></p>
-  <p><b>ఇది మన కథ మొదలు 🌙</b></p>
-
-  <button onclick="goNext()">Next ▶️</button>
+  <button onclick="nextScene()">Next ▶️</button>
 </div>
 
 <!-- SCENE 2 -->
 <div class="scene fade" id="scene2">
-  <p>🌸 ఈ క్షణం కోసం…</p>
-  <p>చాలా రోజులుగా నా మనసు ఎదురుచూస్తోంది…</p>
+  <p>🌸 దగ్గరగా రా…</p>
+  <p>ఈ క్షణాన్ని మాటలతో కాదు…</p>
+  <p>మన హృదయాలతో పంచుకుందాం…</p>
 
-  <h1>Will you stay with me forever? 💍</h1>
+  <h1>Can I steal a kiss? 💋</h1>
 
-  <button class="yes" onclick="yesClicked()">YES ❤️</button>
+  <button class="kiss" onclick="kissMoment()">Yes 💖</button>
 </div>
 
 <canvas id="fireworks"></canvas>
@@ -114,15 +119,15 @@ canvas{
 <script>
 const music = document.getElementById("music");
 
-function goNext(){
-  music.play(); // mobile required
+function nextScene(){
+  music.play();
   document.getElementById("scene1").classList.remove("active");
   document.getElementById("scene2").classList.add("active");
 }
 
-function yesClicked(){
+function kissMoment(){
   if(navigator.vibrate){
-    navigator.vibrate([200,100,200,100,400]);
+    navigator.vibrate([150,80,150]);
   }
   startFireworks();
 }
@@ -132,17 +137,17 @@ const ctx = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
-let particles = [];
+let particles=[];
 
 function startFireworks(){
-  for(let i=0;i<180;i++){
+  for(let i=0;i<140;i++){
     particles.push({
       x:canvas.width/2,
       y:canvas.height/2,
-      vx:(Math.random()-0.5)*7,
-      vy:(Math.random()-0.5)*7,
-      life:120,
-      color:`hsl(${Math.random()*360},100%,70%)`
+      vx:(Math.random()-0.5)*6,
+      vy:(Math.random()-0.5)*6,
+      life:100,
+      color:`hsl(${Math.random()*360},90%,70%)`
     });
   }
   animate();
@@ -156,7 +161,7 @@ function animate(){
     p.life--;
     ctx.fillStyle=p.color;
     ctx.beginPath();
-    ctx.arc(p.x,p.y,2.5,0,Math.PI*2);
+    ctx.arc(p.x,p.y,2.3,0,Math.PI*2);
     ctx.fill();
     if(p.life<=0) particles.splice(i,1);
   });
