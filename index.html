@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kiss Day 💋</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Telugu&display=swap" rel="stylesheet">
 
 <style>
 body {
@@ -13,7 +13,7 @@ body {
   height: 100vh;
   background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
   overflow: hidden;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Noto Serif Telugu', serif;
   color: white;
 }
 
@@ -30,11 +30,14 @@ body {
   font-size: 22px;
   opacity: 0;
   animation: fadeIn 3s forwards;
+  margin-bottom: 10px;
 }
 
-.subtitle:nth-child(2) { animation-delay: 3s; }
-.subtitle:nth-child(3) { animation-delay: 6s; }
-.subtitle:nth-child(4) { animation-delay: 9s; }
+.subtitle:nth-child(1) { animation-delay: 1s; }
+.subtitle:nth-child(2) { animation-delay: 4s; }
+.subtitle:nth-child(3) { animation-delay: 7s; }
+.subtitle:nth-child(4) { animation-delay: 10s; }
+.subtitle:nth-child(5) { animation-delay: 13s; }
 
 @keyframes fadeIn {
   to { opacity: 1; }
@@ -42,22 +45,28 @@ body {
 
 button {
   margin-top: 30px;
-  padding: 14px 30px;
+  padding: 14px 34px;
   font-size: 18px;
   border: none;
   border-radius: 30px;
   background: crimson;
   color: white;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(255,0,0,0.6);
+  box-shadow: 0 0 20px rgba(255,0,0,0.7);
   display: none;
 }
 
 #kiss {
-  font-size: 50px;
+  font-size: 60px;
   margin-top: 20px;
   display: none;
   animation: pop 1s infinite alternate;
+}
+
+#finalText {
+  margin-top: 20px;
+  font-size: 20px;
+  display: none;
 }
 
 @keyframes pop {
@@ -65,17 +74,17 @@ button {
   to { transform: scale(1.2); }
 }
 
-/* Rain */
+/* Rain Effect */
 .rain {
   position: absolute;
   width: 2px;
-  height: 100px;
+  height: 120px;
   background: rgba(255,255,255,0.2);
   animation: fall linear infinite;
 }
 
 @keyframes fall {
-  from { top: -100px; }
+  from { top: -120px; }
   to { top: 100vh; }
 }
 </style>
@@ -84,34 +93,39 @@ button {
 <body>
 
 <div class="center">
-  <div class="subtitle">🌧️ Background rain… slow music…</div>
-  <div class="subtitle">She looks at you… You look at her…</div>
-  <div class="subtitle">“Ee duniya lo chaala mandhi untaru…”</div>
-  <div class="subtitle">“Kani naa universe motham nuvve.”</div>
+  <div class="subtitle">🌧️ వాన పడుతోంది… మ్యూజిక్ మెల్లగా ప్లే అవుతోంది…</div>
+  <div class="subtitle">నువ్వు నా వైపు చూస్తున్నావు… నేనూ నిన్నే చూస్తున్నాను…</div>
+  <div class="subtitle">ఈ ప్రపంచంలో చాలా మంది ఉంటారు…</div>
+  <div class="subtitle">కానీ నా ప్రపంచం మాత్రం నువ్వే ❤️</div>
+  <div class="subtitle">ఈ క్షణం… ఎప్పటికీ గుర్తుండిపోవాలి…</div>
 
-  <button id="btn" onclick="showKiss()">Come closer 💋</button>
+  <button id="btn" onclick="showKiss()">ఇంకా దగ్గరకి రా 💋</button>
   <div id="kiss">💋</div>
+  <div id="finalText">ఇది కేవలం ఒక ముద్దు కాదు…  
+  నా జీవితంపై ఇచ్చిన వాగ్దానం 😌❤️</div>
 </div>
 
 <audio autoplay loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 setTimeout(() => {
   document.getElementById("btn").style.display = "inline-block";
-}, 12000);
+}, 16000);
 
 function showKiss() {
   document.getElementById("kiss").style.display = "block";
+  document.getElementById("finalText").style.display = "block";
+  navigator.vibrate && navigator.vibrate(200);
 }
 
-/* Rain generator */
-for (let i = 0; i < 60; i++) {
+/* Rain Generator */
+for (let i = 0; i < 70; i++) {
   let drop = document.createElement("div");
   drop.className = "rain";
   drop.style.left = Math.random() * 100 + "vw";
-  drop.style.animationDuration = (Math.random() * 1 + 0.5) + "s";
+  drop.style.animationDuration = (Math.random() * 1 + 0.6) + "s";
   document.body.appendChild(drop);
 }
 </script>
